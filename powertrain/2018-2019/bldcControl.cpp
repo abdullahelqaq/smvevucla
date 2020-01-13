@@ -11,7 +11,7 @@ int cHigh = 9;
 int cLow = 3;
 /*---------------*/
 
-int debugging = 0;
+int debugging = 1;
 int fullThrottle = 0;
 
 /*
@@ -56,21 +56,26 @@ class MotorPhase {
     }
 
     void writePWM(int high) {
-      switch (high) {
-        case 1:
-          analogWrite(m_HI, 255 - motorWrite);
-          //digitalWrite(m_HI, LOW);
-          analogWrite(m_LO, 0);
-          break;
-        case -1:
-          analogWrite(m_HI, 255);
-          analogWrite(m_LO, motorWrite);
-          //digitalWrite(m_LO, HIGH);
-          break;
-        case 0:
-          analogWrite(m_HI, 255);
-          analogWrite(m_LO, 0);
-          break;
+      if (motorWrite < 10 || debugging == 1) {
+        digitalWrite(m_LO, LOW);
+        digitalWrite(m_HI, HIGH);
+      } else {
+        switch (high) {
+          case 1:
+            analogWrite(m_HI, 255 - motorWrite);
+            //digitalWrite(m_HI, LOW);
+            analogWrite(m_LO, 0);
+            break;
+          case -1:
+            analogWrite(m_HI, 255);
+            analogWrite(m_LO, motorWrite);
+            //digitalWrite(m_LO, HIGH);
+            break;
+          case 0:
+            analogWrite(m_HI, 255);
+            analogWrite(m_LO, 0);
+            break;
+        }
       }
     }
 
@@ -296,6 +301,11 @@ void loop() {
   
 
   if (debugging == 1) {
+    Serial.print(hallSensors[0]->currentState());
+    Serial.print(", ");
+    Serial.print(hallSensors[1]->currentState());
+    Serial.print(", ");
+    Serial.println(hallSensors[2]->currentState());
     Serial.print("Motor Step: ");
     Serial.print(nextState);
     Serial.print(" PWM Write: ");
