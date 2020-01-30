@@ -3,12 +3,12 @@ int hallGreen = A0;
 int hallGray = A2;
 int hallWhite = A5;
 int throttleIn = A4;
-int aHigh = 10;
-int aLow = 6;
-int bHigh = 4;
-int bLow = 5;
+int aHigh = 8;
+int aLow = 7;
+int bHigh = 5;
+int bLow = 6;
 int cHigh = 9;
-int cLow = 3;
+int cLow = 10;
 /*---------------*/
 
 int debugging = 1;
